@@ -2,6 +2,9 @@
 
 package lesson1.task1
 
+import junit.framework.TestCase.*
+import lesson2.task1.whichRookThreatens
+import lesson2.task2.isNumberHappy
 import kotlin.math.*
 
 // Урок 1: простые функции
@@ -53,8 +56,6 @@ fun quadraticRootProduct(a: Double, b: Double, c: Double): Double {
  * Пример главной функции
  */
 fun main() {
-        val x1x2 = lengthInMeters(8, 2, 11)
-    println("Root product: $x1x2")
 }
 
 /**

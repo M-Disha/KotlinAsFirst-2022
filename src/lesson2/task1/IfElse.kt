@@ -38,6 +38,8 @@ fun gradeNotation(grade: Int): String = when (grade) {
     else -> "несуществующая оценка $grade"
 }
 
+
+
 /**
  * Пример
  *
@@ -68,7 +70,17 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String {
+    val lastDigit = age % 10
+    val lastTwoDigits = age % 100
+    val type = if (lastDigit == 1 && lastTwoDigits != 11)
+        "год"
+    else if (lastDigit in 2..4 && lastTwoDigits !in 11..19)
+        "года"
+    else
+        "лет"
+    return "$age $type"
+}
 
 /**
  * Простая (2 балла)
@@ -96,7 +108,16 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    val firstRook = rookX1 == kingX || rookY1 == kingY
+    val secondRook = rookX2 == kingX || rookY2 == kingY
+    return when {
+        firstRook && secondRook -> 3
+        secondRook -> 2
+        firstRook -> 1
+        else -> 0
+    }
+}
 
 /**
  * Простая (2 балла)
