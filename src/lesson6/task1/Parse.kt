@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import java.lang.NumberFormatException
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -114,7 +116,19 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    return try {
+        val jumpsR =
+            jumps.split(""""[%\-\s]""".toRegex())
+                .filter { it.isNotBlank() }
+                .maxOf { it.trim().toInt() }
+        jumpsR
+    } catch (e: NoSuchElementException) {
+        -1
+    }catch (e: NumberFormatException) {
+        -1
+    }
+}
 
 /**
  * Сложная (6 баллов)
@@ -149,7 +163,18 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val split = str.split(" ")
+    var len = 0
+    if (split.size !=1) {
+        for (i in 0..split.size - 2) {
+            if (split[i].lowercase() == split[i + 1].lowercase()) {
+                return len
+            } else len += split[i].length + 1
+        }
+    }
+    return -1
+}
 
 /**
  * Сложная (6 баллов)
@@ -162,7 +187,18 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val descriptionSpit = description.split("""[/s;]""".toRegex()).filter { it.isNotBlank()}
+    var max = -1.0
+    var result = ""
+    for (sam in 1 until descriptionSpit.size step 2) {
+        if (max < descriptionSpit[sam].toDouble()){
+            max = descriptionSpit[sam].toDouble()
+            result = descriptionSpit[sam - 1]
+        }
+    }
+    return result
+}
 
 /**
  * Сложная (6 баллов)
