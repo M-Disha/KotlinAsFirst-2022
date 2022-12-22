@@ -154,7 +154,8 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
-fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> =
+(mapA.keys + mapB.keys).associateWith { setOf(mapA[it], mapB[it]).filterNotNull().joinToString() }
 
 /**
  * Средняя (4 балла)
@@ -183,7 +184,19 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    var minimum = Double.MAX_VALUE
+    var res: String? = null
+    for ((name, info) in stuff) {
+        val type = info.first
+        val price = info.second
+        if (type == kind && price <= minimum) {
+            minimum = price
+            res = name
+        }
+    }
+    return res
+}
 
 /**
  * Средняя (3 балла)
@@ -277,7 +290,24 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    val sortedList = list.sorted()
+    var end = list.size - 1
+    var start = 0
+    var res1 = 0
+    while (start < end) {
+        if (sortedList[start] + sortedList[end] == number) break
+        else if (sortedList[start] + sortedList[end] < number) start++
+        else if (sortedList[start] + sortedList[end] > number) end--
+    }
+    for (i in list.indices)
+        if (list[i] == sortedList[start]) res1 = i
+    for (i in list.indices)
+        if (list[i] == sortedList[end]) {
+            if (res1 != i && list[res1] + list[i] == number) return Pair(res1, i)
+        }
+    return Pair(-1, -1)
+}
 
 /**
  * Очень сложная (8 баллов)

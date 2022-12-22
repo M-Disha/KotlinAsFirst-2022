@@ -2,6 +2,9 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
+import kotlin.math.max
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -129,7 +132,19 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    var a = m
+    var c = n
+    while (a != 0 && c != 0) {
+        if (a > c) a -= c
+        else c -= a
+    }
+    return max (a,c) == 1
+}
+
+
+
+}
 
 /**
  * Средняя (3 балла)
@@ -138,7 +153,18 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var c = n
+    var digit: Int
+    var sum = 0
+    while (c > 0) {
+        digit = c % 10
+        c /= 10
+        sum *= 10
+        sum += digit
+    }
+    return sum
+}
 
 /**
  * Средняя (3 балла)
@@ -192,7 +218,21 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var number = 0
+    var t = 0
+    while (number != n) {
+        t++
+        val a = sqr(t)
+        val b
+        number += digitNumber(b)
+        if (b <10 && number == n) return a
+        if (number >= n) {
+            return ((a / 10.0.pow(number - n)%10.toInt()).toInt())
+        }
+    }
+    return -1
+}
 
 /**
  * Сложная (5 баллов)
