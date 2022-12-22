@@ -3,6 +3,7 @@
 package lesson7.task1
 
 import java.io.File
+import java.lang.NullPointerException
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -95,6 +96,10 @@ fun sibilants(inputName: String, outputName: String) {
     TODO()
 }
 
+private operator fun Unit.plus(s: String): Any {
+
+}
+
 /**
  * Средняя (15 баллов)
  *
@@ -113,7 +118,32 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    val fileObject = File(inputName)
+    val lines = fileObject.bufferedReader().readLines().map{ it.trim() }
+    try {
+        val maxindx = lines.indexOf(lines.maxByOrNull { it.length}!!)
+        for (indx in lines.indices) {
+            if (lines.size ==1) {
+                writer.write(lines[indx])
+                break
+            }
+            if (indx != maxindx) {
+                writer.write(" ".repeat(lines[maxindx].length - lines[indx].length / 2) + lines[indx] + "\n")
+            }else writer.write(lines[indx] + "\n")
+        }
+    }catch (e: NullPointerException) {
+        writer.write("")
+    }
+    writer.close()
+}
+
+private fun Int.split(regex: Regex): Any {
+
+}
+
+private fun Any.toMutableList(): Any {
+    TODO("Not yet implemented")
 }
 
 /**
@@ -144,7 +174,37 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+    val output = File(outputName).bufferedWriter()
+    var maxLenght = 0
+    for (line in File(inputName).readLines()) {
+        val now = Regex("\\s+").replace(line.trim(), " ").length
+        if(now > maxLenght) maxLenght = now
+    }
+    for (line in File(inputName).readLines()) {
+        val 1 = line.trim()
+        val parts = 1.split(Regex("\\s")).toMutableList()
+        if (parts.size ==1) {
+            output.write(1)
+            output.newLine()
+        }else if (line =="") {
+            output.newLine()
+        }else {
+            var nOfSpaces = maxLenght - 1.length
+            var i = 0
+            while (nOfSpaces > 0) {
+                parts[i] +=
+                    if (i <parts.size -2){
+                        i++
+                    }else {
+                        i = 0
+                    }
+            }
+            nOfSpaces--
+        }
+        output.write(parts.joinToString(" "))
+        output.newLine()
+    }
+    output.close()
 }
 
 /**
